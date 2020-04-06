@@ -3,23 +3,22 @@ import fetch from 'node-fetch'
 import CardTrending1 from '../components/CardTrending1'
 import Card3Top from '../components/Card3Top'
 import Layout from '../components/Layout'
-import axios from 'axios'
 
 export default class Index extends React.Component {
-    static getInitialProps() {
-        const us = axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
-        const sg = axios.get('https://newsapi.org/v2/top-headlines?country=sg&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
-        const id = axios.get('https://newsapi.org/v2/top-headlines?country=id&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
-        const usTech = axios.get('https://newsapi.org/v2/top-headlines?country=us&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
-        const sgTech = axios.get('https://newsapi.org/v2/top-headlines?country=sg&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
-        const idTech = axios.get('https://newsapi.org/v2/top-headlines?country=id&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+    static async getInitialProps() {
+        const us = await fetch('https://newsapi.org/v2/top-headlines?country=us&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const sg = await fetch('https://newsapi.org/v2/top-headlines?country=sg&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const id = await fetch('https://newsapi.org/v2/top-headlines?country=id&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const usTech = await fetch('https://newsapi.org/v2/top-headlines?country=us&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const sgTech = await fetch('https://newsapi.org/v2/top-headlines?country=sg&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const idTech = await fetch('https://newsapi.org/v2/top-headlines?country=id&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
         return {
-            newsBsnsUs: us.json(),
-            newsTechUs: usTech.json(),
-            newsBsnsSg: sg.json(),
-            newsTechSg: sgTech.json(),
-            newsBsnsId: id.json(),
-            newsTechId: idTech.json()
+            newsBsnsUs: await us.json(),
+            newsTechUs: await usTech.json(),
+            newsBsnsSg: await sg.json(),
+            newsTechSg: await sgTech.json(),
+            newsBsnsId: await id.json(),
+            newsTechId: await idTech.json()
         }
     }
     render() {
