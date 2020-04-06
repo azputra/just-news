@@ -1,203 +1,106 @@
-import Head from 'next/head'
+import React from 'react'
+import fetch from 'node-fetch'
+import CardTrending1 from '../components/CardTrending1'
+import Card3Top from '../components/Card3Top'
+import Layout from '../components/Layout'
+import axios from 'axios'
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
-
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
+export default class Index extends React.Component {
+    static getInitialProps() {
+        const us = axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const sg = axios.get('https://newsapi.org/v2/top-headlines?country=sg&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const id = axios.get('https://newsapi.org/v2/top-headlines?country=id&category=business&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const usTech = axios.get('https://newsapi.org/v2/top-headlines?country=us&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const sgTech = axios.get('https://newsapi.org/v2/top-headlines?country=sg&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        const idTech = axios.get('https://newsapi.org/v2/top-headlines?country=id&category=technology&pagesize=8&apiKey=e29fa93344394a3ba440c5791ae8ad41')
+        return {
+            newsBsnsUs: us.json(),
+            newsTechUs: usTech.json(),
+            newsBsnsSg: sg.json(),
+            newsTechSg: sgTech.json(),
+            newsBsnsId: id.json(),
+            newsTechId: idTech.json()
         }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+    }
+    render() {
+        const newsBsnsUs = this.props.newsBsnsUs
+        const newsTechUs = this.props.newsTechUs
+        const newsBsnsSg = this.props.newsBsnsSg
+        const newsTechSg = this.props.newsTechSg
+        const newsBsnsId = this.props.newsBsnsId
+        const newsTechId = this.props.newsTechId
+        const randomIndex = Math.floor(Math.random() * 7) + 1
+        const randomNews = Math.floor(Math.random() * 6)
+        const topNews = [newsBsnsUs, newsTechUs, newsBsnsSg, newsTechSg, newsBsnsId, newsTechId]
+        console.log(newsBsnsUs, newsTechUs, newsBsnsSg, newsTechSg, newsBsnsId, newsTechId, "masuk");
+        const topTrending = topNews[randomNews].articles[randomIndex]
+        return <Layout>
+            {(newsTechId.articles.length > 0)
+                ?
+                <div className="container">
+                    <div className="row">
+                        <CardTrending1 TopNews={topTrending} />
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <h1>Technology</h1>
+                        </div>
+                    </div>
+                    <div className="row hot-news">
+                        <Card3Top news={newsTechId} random={randomIndex} />
+                        <Card3Top news={newsTechSg} random={randomIndex} />
+                        <Card3Top news={newsTechUs} random={randomIndex} />
+                    </div >
+                    <div className="row">
+                        <div className="col">
+                            <h1>Business</h1>
+                        </div>
+                    </div>
+                    <div className="row hot-news">
+                        <Card3Top news={newsBsnsId} random={randomIndex} />
+                        <Card3Top news={newsBsnsSg} random={randomIndex} />
+                        <Card3Top news={newsBsnsUs} random={randomIndex} />
+                    </div>
+                </div>
+                :
+                <div className="container">
+                    <h1>Loading . . .</h1>
+                </div>
+            }
+            <style jsx>{`
+                 body {
+                 margin: 0;
+                 }
+                 h3{
+                     cursor:pointer
+                 }
+                 .container{
+                     margin-top:10vh;
+                     padding-right: 15px;
+                     padding-left: 15px;
+                     margin-right: auto;
+                     margin-left: auto;
+                 }
+                 .row{
+                     margin: 5px;
+                     display: flex;
+                 }
+                 .col{
+                     position: relative;
+                     min-height: 1px;
+                     padding-right: 15px;
+                     padding-left: 15px;
+                 }
+                 .hot-news{
+                     justify-content: space-around;
+                 }
+                 .img-top-one{
+                     max-height:70vh;
+                     max-width:175vh;
+                     min-height:70vh;
+                     min-width:175vh;
+                 }
+             `}</style>
+        </Layout>
+    }
+}
